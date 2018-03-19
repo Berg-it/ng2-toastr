@@ -1,12 +1,13 @@
 import {
-  Component, ChangeDetectorRef, transition, state, trigger, style, animate,
-  NgZone, OnDestroy, AnimationTransitionEvent} from '@angular/core';
+  Component, ChangeDetectorRef,
+  NgZone, OnDestroy} from '@angular/core';
 import {Toast} from './toast';
 import {ToastOptions} from './toast-options';
 import {DomSanitizer} from '@angular/platform-browser';
 import 'rxjs/add/operator/first';
 import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
+import {AnimationEvent, transition, state, trigger, style, animate} from '@angular/animations';
 
 @Component({
   selector: 'toast-container',
@@ -114,8 +115,7 @@ export class ToastContainer implements OnDestroy {
   constructor(private sanitizer: DomSanitizer,
               private cdr: ChangeDetectorRef,
               private _zone: NgZone,
-              options: ToastOptions)
-  {
+              options: ToastOptions) {
     Object.assign(this, options);
   }
 
@@ -194,7 +194,7 @@ export class ToastContainer implements OnDestroy {
     return null;
   }
 
-  onAnimationEnd(event: AnimationTransitionEvent) {
+  onAnimationEnd(event: AnimationEvent) {
     if (event.toState === 'void' && !this.anyToast()) {
       this._ngExit();
     } else if (this._fresh && event.fromState === 'void') {
